@@ -9,7 +9,7 @@
         "sidePanel"
     ],
     "action": {
-        "default_popup": "index.html"
+        "default_popup": "extension.html"
     },
     "side_panel": {
         "default_path": "index.html"

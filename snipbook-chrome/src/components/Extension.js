@@ -5,7 +5,6 @@ import '../styles/index.css';
 /* global chrome */
 
 const Extension = () => {
-    const [isSidebarVisible, setSidebarVisible] = useState(false);
 
     const handleEnlarge = () => {
         chrome.windows.getCurrent({ populate: true }, (window) => {
@@ -19,7 +18,7 @@ const Extension = () => {
     return (
         <div className="extension">
             <noscript>You need to enable JavaScript to run this app.</noscript>
-            <p>Save snippets</p>
+            <p>Side panel</p>
             <button onClick={handleEnlarge}>Snipbook</button>
         </div>
     );
