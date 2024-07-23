@@ -6,12 +6,22 @@
   "author": "Mohammad Affan Khan",
   "permissions": [
         "activeTab",
-        "sidePanel"
+        "sidePanel",
+        "storage"
     ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
     "action": {
         "default_popup": "extension.html"
     },
     "side_panel": {
         "default_path": "index.html"
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content-script.js"]
+        }
+    ]
 }
