@@ -1,0 +1,17 @@
+{
+  "name": "Snipbook",
+  "version": "1.0.0",
+  "description": "",
+  "manifest_version": 3,
+  "author": "Mohammad Affan Khan",
+  "permissions": [
+        "activeTab",
+        "sidePanel"
+    ],
+    "action": {
+        "default_popup": "index.html"
+    },
+    "side_panel": {
+        "default_path": "index.html"
+    }
+}
