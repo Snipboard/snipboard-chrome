@@ -1,23 +1,56 @@
 name: Bug Report
-description: Create a report to help us improve
+description: Use this template to report a bug you have encountered.
+
+assignees: []
 labels: bug
+title: "[BUG] - Short description of the issue"
 
----
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thank you for taking the time to report a bug! Please fill out the details below to help us understand and address the issue.
 
-**Bug Description**
-A clear and concise description of what the bug is.
+- type: input
+  id: bug_description
+  attributes:
+    label: Bug Description
+    description: A clear and concise description of what the bug is.
+    placeholder: "Describe the bug here..."
+  validations:
+    required: true
 
-**How to Recreate**
-Steps to reproduce the behavior:
-1. Step 1
-2. Step 2
-3. Step 3
+- type: textarea
+  id: how_to_recreate
+  attributes:
+    label: How to Recreate
+    description: Steps to reproduce the behavior.
+    placeholder: |
+      1. Step 1
+      2. Step 2
+      3. Step 3
+  validations:
+    required: true
 
-**Expected Behavior**
-A clear and concise description of what you expected to happen.
+- type: textarea
+  id: expected_behavior
+  attributes:
+    label: Expected Behavior
+    description: What you expected to happen.
+    placeholder: "Describe what you expected to happen..."
+  validations:
+    required: true
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+- type: input
+  id: screenshots
+  attributes:
+    label: Screenshots (if applicable)
+    description: Add screenshots to help explain your problem.
+    placeholder: "Provide links to screenshots if you have any..."
 
-**Additional Context**
-Add any other context about the problem here (e.g., environment, configuration, etc.).
+- type: textarea
+  id: additional_context
+  attributes:
+    label: Additional Context
+    description: Any other context about the problem, such as environment or configuration.
+    placeholder: "Provide any additional information here..."
