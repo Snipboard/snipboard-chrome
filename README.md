@@ -1,2 +1,2 @@
-# snipbook-chrome
-Chrome Extension for Snipbook
+# snipboard-chrome
+Chrome Extension for Snipboard
