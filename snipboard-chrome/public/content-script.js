@@ -1,8 +1,8 @@
 // content.js
 
 function addSaveButton(codeElement) {
-    
     console.log('Adding save button to code element:', codeElement);
+
     const button = document.createElement('button');
     button.innerText = 'Save';
     button.style.position = 'absolute';
@@ -16,8 +16,8 @@ function addSaveButton(codeElement) {
     button.style.cursor = 'pointer';
 
     button.addEventListener('click', () => {
-      const snippet = codeElement.innerText;
-      chrome.runtime.sendMessage({ action: 'saveSnippet', snippet: snippet });
+        const snippet = codeElement.innerText;
+        chrome.runtime.sendMessage({ action: 'saveSnippet', snippet: snippet });
     });
 
     const wrapper = document.createElement('div');
@@ -29,53 +29,46 @@ function addSaveButton(codeElement) {
     buttonWrapper.style.position = 'absolute';
     buttonWrapper.style.bottom = '0';
     buttonWrapper.style.right = '0';
+    buttonWrapper.className = 'code-wrapper';
     buttonWrapper.appendChild(button);
 
     wrapper.appendChild(buttonWrapper);
-    wrapper.classList.add('code-wrapper');
-    //check if there exists a div with class code-wrapper
-    if (codeElement.parentNode) {
-        codeElement.parentNode.replaceChild(wrapper, codeElement); // Replace the original code element
-    } else {
-        console.error('Failed to replace codeElement because it has no parentNode.');
-    }
+
+    // Replace the original code element with the wrapper
+    codeElement.parentNode.replaceChild(wrapper, codeElement);
 }
 
 function detectCodeSnippets() {
-    const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1 // Trigger when at least 10% of the code block is visible
-    };
-
-    const callback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const codeElement = entry.target;
-                addSaveButton(codeElement);
-                observer.unobserve(codeElement); // Stop observing once the button is added
-            }
-        });
-    };
-    const observer = new IntersectionObserver(callback, options);
-
-    // Updated selector to include 'devsite-code' elements
     const codeElements = document.querySelectorAll('pre code, .code-block');
 
-    codeElements.forEach((codeElement) => {
-        // Handle 'devsite-code' elements differently if needed
-        if ((codeElement.tagName === 'CODE' && codeElement.parentElement.tagName === 'PRE') || codeElement.classList.contains('code-block')) {
-            if (!codeElement.nextElementSibling || codeElement.nextElementSibling.className !== 'add-snippet-btn') {
-                // Check if the button has already been added to avoid duplication
-                observer.observe(codeElement);
+    let index = 0;
+
+    function addButtonsSequentially() {
+        if (index < codeElements.length) {
+            const codeElement = codeElements[index];
+            if ((codeElement.tagName === 'CODE' && codeElement.parentElement.tagName === 'PRE') || codeElement.classList.contains('code-block')) {
+                if (!codeElement.querySelector('.code-wrapper')) {
+                    addSaveButton(codeElement);
+                }
             }
+            index++;
+            setTimeout(addButtonsSequentially, 50); // Add buttons with a slight delay
         }
-    });
+    }
+
+    addButtonsSequentially();
 }
 
-// Run the detection on page load
-detectCodeSnippets();
+document.addEventListener('DOMContentLoaded', () => {
+    detectCodeSnippets();
+});
 
 // Observe changes to the DOM and re-run detection if necessary
-const observer = new MutationObserver(detectCodeSnippets);
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach(mutation => {
+        if (mutation.addedNodes.length || mutation.removedNodes.length) {
+            detectCodeSnippets();
+        }
+    });
+});
 observer.observe(document.body, { childList: true, subtree: true });
