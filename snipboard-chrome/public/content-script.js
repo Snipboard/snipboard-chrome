@@ -1,9 +1,6 @@
 // content.js
 
 function addSaveButton(codeElement) {
-    if (codeElement.parentNode.classList.contains('code-wrapper')) {
-        return; // Button already added, so exit the function
-    }
     
     const button = document.createElement('button');
     button.innerText = 'Save';
@@ -34,7 +31,11 @@ function addSaveButton(codeElement) {
     buttonWrapper.appendChild(button);
 
     wrapper.appendChild(buttonWrapper);
-    codeElement.parentNode.replaceChild(wrapper, codeElement); // Replace the original code element
+    if (codeElement.parentNode) {
+        codeElement.parentNode.replaceChild(wrapper, codeElement); // Replace the original code element
+    } else {
+        console.error('Failed to replace codeElement because it has no parentNode.');
+    }
 }
 
 function detectCodeSnippets() {
@@ -48,10 +49,8 @@ function detectCodeSnippets() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const codeElement = entry.target;
-                if (!codeElement.parentNode.classList.contains('code-wrapper')) {
-                    addSaveButton(codeElement);
-                    observer.unobserve(codeElement); // Stop observing once the button is added
-                }
+                addSaveButton(codeElement);
+                observer.unobserve(codeElement); // Stop observing once the button is added
             }
         });
     };

@@ -1,4 +1,4 @@
-document.getElementById('snipbook-button').addEventListener('click', handleEnlarge);
+document.getElementById('snipboard-button').addEventListener('click', handleEnlarge);
 
 function handleEnlarge() {
     chrome.windows.getCurrent({ populate: true }, (window) => {

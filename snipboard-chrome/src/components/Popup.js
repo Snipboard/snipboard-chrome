@@ -15,7 +15,7 @@ const Sidebar = ({ onClose }) => {
     return ReactDOM.createPortal(
         <div id="mySidebar" className="sidebar">
             <div className="sidebar-header">
-                <h2>Snipbook</h2>
+                <h2>Snipboard</h2>
                 <button onClick={onClose}>Close</button>
             </div>
             <div className="sidebar-content">

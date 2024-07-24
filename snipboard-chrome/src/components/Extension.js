@@ -19,7 +19,7 @@ const Extension = () => {
         <div className="extension">
             <noscript>You need to enable JavaScript to run this app.</noscript>
             <p>Side panel</p>
-            <button onClick={handleEnlarge}>Snipbook</button>
+            <button onClick={handleEnlarge}>Snipboard</button>
         </div>
     );
 }
