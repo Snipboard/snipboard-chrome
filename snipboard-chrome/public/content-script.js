@@ -1,5 +1,8 @@
 // content.js
 
+/**
+* Detects code snippets as they enter the viewport, and invokes addSaveButton if needed
+*/
 function detectCodeSnippets() {
     const options = {
         root: null,
@@ -9,8 +12,10 @@ function detectCodeSnippets() {
 
     const callback = (entries, observer) => {
         entries.forEach(entry => {
+            // Add save button if the code element is intersecting.
             if (entry.isIntersecting) {
                 const codeElement = entry.target;
+                // Add save button and unobserve the code element
                 if (codeElement.parentNode.parentNode) {
                     addSaveButton(codeElement);
                     observer.unobserve(codeElement);
@@ -24,17 +29,33 @@ function detectCodeSnippets() {
     const codeElements = document.querySelectorAll('pre code, .code-block');
 
     codeElements.forEach((codeElement) => {
+        // This method is called by the code element to observe the code element.
         if ((codeElement.tagName === 'CODE' && codeElement.parentElement.tagName === 'PRE') || codeElement.classList.contains('code-block')) {
             observer.observe(codeElement);
         }
     });
 }
 
+/**
+* Adds a button to save the snippet. It is called when the user clicks on the button in the code element.
+* 
+* @param codeElement - The code element to process. Should normally be a <code> element
+* 
+* @return { boolean } True if the button was added
+*/
 function addSaveButton(codeElement) {
     // Check if the code element is already processed, return if it is
+    // If the dataset has processed true then the dataset is processed.
     if (codeElement.dataset.processed === 'true') {
         return;
     }
+
+    //Desired structure will be like this
+    //<div> ---ultimateWrapper in code
+    //  <pre> ---clonedPre
+    //      <code>
+    //  <div> ---buttonWrapper
+    //      <button>Save</button>
 
     const button = document.createElement('button');
     button.innerText = 'Save';
@@ -76,15 +97,7 @@ function addSaveButton(codeElement) {
     // Mark the code element as processed by getting the child of cloned pre
     clonedPre.querySelector('code').dataset.processed = 'true';
 
-    codeElement.parentNode.parentNode.replaceChild(ultimateWrapper, codeElement.parentNode);
-
-    //Desired structure will be like this
-    //<div> ---ultimateWrapper in code
-    //  <pre> ---clonedPre
-    //      <code>
-    //  <div> ---buttonWrapper
-    //      <button>Save</button>
-
+    return codeElement.parentNode.parentNode.replaceChild(ultimateWrapper, codeElement.parentNode);
 }
 
 detectCodeSnippets();
