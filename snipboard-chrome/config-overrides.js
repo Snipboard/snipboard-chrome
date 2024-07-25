@@ -8,32 +8,32 @@ module.exports = override((config) => {
     (plugin) => !(plugin instanceof HtmlWebpackPlugin)
   );
 
-  // Add HtmlWebpackPlugin for index.html
+  // Add HtmlWebpackPlugin for popup.html
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'public/index.html'),
-      filename: 'index.html',
+      template: path.resolve(__dirname, 'public/popup.html'),
+      filename: 'popup.html',
       chunks: ['main'],
       minify: false, // Disable minification for easier debugging
     })
   );
 
-  // Add HtmlWebpackPlugin for extension.html
+  // Add HtmlWebpackPlugin for sidepanel.html
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'public/extension.html'),
-      filename: 'extension.html',
-      chunks: ['extension'],
+      template: path.resolve(__dirname, 'public/sidepanel.html'),
+      filename: 'sidepanel.html',
+      chunks: ['sidepanel'],
       minify: false, // Disable minification for easier debugging
     })
   );
 
-  // Ensure that the entry points include 'extension'
+  // Ensure that the entry points include 'sidepanel'
   config.entry = {
-    main: path.resolve(__dirname, 'src/index.js'),
-    extension: path.resolve(__dirname, 'src/extension.js'),
+    main: path.resolve(__dirname, 'src/popup.js'),
+    sidepanel: path.resolve(__dirname, 'src/sidepanel.js'),
   };
 
   // Adjust output configuration

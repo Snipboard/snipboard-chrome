@@ -13,10 +13,10 @@
         "service_worker": "service-worker.js"
     },
     "action": {
-        "default_popup": "extension.html"
+        "default_popup": "popup.html"
     },
     "side_panel": {
-        "default_path": "index.html"
+        "default_path": "sidepanel.html"
     },
     "content_scripts": [
         {

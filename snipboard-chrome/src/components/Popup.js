@@ -3,7 +3,7 @@ import '../styles/index.css';
 
 /* global chrome */
 
-const Extension = () => {
+const Popup = () => {
     return (
         <div className="popup">
             <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -16,4 +16,4 @@ const Extension = () => {
     );
 }
 
-export default Extension;
+export default Popup;
