@@ -1,11 +1,12 @@
 // src/App.js
 import React from 'react';
-import AppRoutes from './Routes';
+import Popup from './components/Popup';
+import SidePanel from './components/SidePanel';
 
 const App = () => {
   return (
     <div>
-      <AppRoutes />
+      <SidePanel />
     </div>
   );
 };

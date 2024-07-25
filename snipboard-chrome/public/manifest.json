@@ -13,18 +13,15 @@
         "service_worker": "service-worker.js"
     },
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "extension.html"
     },
     "side_panel": {
-        "default_path": "sidepanel.html"
+        "default_path": "index.html"
     },
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
             "js": ["content-script.js"]
         }
-    ],
-    "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self'"
-    }
+    ]
 }
