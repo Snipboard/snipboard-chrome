@@ -1,13 +1,13 @@
+// src/App.js
 import React from 'react';
+import AppRoutes from './Routes';
 
-import Popup from './components/Extension';
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Popup />
+    <div>
+      <AppRoutes />
     </div>
   );
-}
+};
 
 export default App;

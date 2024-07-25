@@ -1,29 +1,19 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
+import '../styles/index.css';
 
-const Sidebar = ({ onClose }) => {
-    useEffect(() => {
-        const sidebar = document.getElementById('mySidebar');
+/* global chrome */
 
-        return () => {
-            if (sidebar) {
-                document.body.removeChild(sidebar);
-            }
-        };
-    }, []);
-
-    return ReactDOM.createPortal(
-        <div id="mySidebar" className="sidebar">
-            <div className="sidebar-header">
-                <h2>Snipboard</h2>
-                <button onClick={onClose}>Close</button>
+const Popup = () => {
+    return (
+        <div className="popup">
+            <noscript>You need to enable JavaScript to run this app.</noscript>
+            <p>Popup</p>
+            {/* Add some sample talwind css code to test */}
+            <div className="bg-blue p-4">
+                <p className="text-darkRed">Sample text</p>
             </div>
-            <div className="sidebar-content">
-                <p>Content of the sidebar</p>
-            </div>
-        </div>,
-        document.body
+        </div>
     );
-};
+}
 
-export default Sidebar;
+export default Popup;
