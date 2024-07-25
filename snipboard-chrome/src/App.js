@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import Popup from './components/Popup';
+import Popup from './components/Extension';
 import SidePanel from './components/SidePanel';
 
 const App = () => {
