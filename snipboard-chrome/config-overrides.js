@@ -3,44 +3,50 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = override((config) => {
-  // Clear existing plugins to avoid conflicts
   config.plugins = config.plugins.filter(
     (plugin) => !(plugin instanceof HtmlWebpackPlugin)
   );
 
-  // Add HtmlWebpackPlugin for popup.html
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, 'public/popup.html'),
       filename: 'popup.html',
       chunks: ['main'],
-      minify: false, // Disable minification for easier debugging
+      minify: false,
     })
   );
 
-  // Add HtmlWebpackPlugin for sidepanel.html
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, 'public/sidepanel.html'),
       filename: 'sidepanel.html',
       chunks: ['sidepanel'],
-      minify: false, // Disable minification for easier debugging
+      minify: false,
     })
   );
 
-  // Ensure that the entry points include 'sidepanel'
+//   config.plugins.push(
+//     new HtmlWebpackPlugin({
+//       inject: true,
+//       template: path.resolve(__dirname, 'public/[name].html'),
+//       filename: '[name].html',
+//       chunks: ['[name]'],
+//       minify: false,
+//     })
+//   );
+
   config.entry = {
     main: path.resolve(__dirname, 'src/popup.js'),
     sidepanel: path.resolve(__dirname, 'src/sidepanel.js'),
+    // [name]: path.resolve(__dirname, 'src/[name].js'),
   };
 
-  // Adjust output configuration
   config.output = {
     ...config.output,
-    filename: '[name].[contenthash].js', // Simplified filename pattern
-    path: path.resolve(__dirname, 'build'), // Ensure output path is set
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'build'),
   };
 
   return config;
