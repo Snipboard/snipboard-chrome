@@ -10,7 +10,7 @@ module.exports = override((config) => {
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'public/popup.html'),
+      template: path.resolve(__dirname, 'public/html/popup.html'),
       filename: 'popup.html',
       chunks: ['main'],
       minify: false,
@@ -20,7 +20,7 @@ module.exports = override((config) => {
   config.plugins.push(
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'public/sidepanel.html'),
+      template: path.resolve(__dirname, 'public/html/sidepanel.html'),
       filename: 'sidepanel.html',
       chunks: ['sidepanel'],
       minify: false,

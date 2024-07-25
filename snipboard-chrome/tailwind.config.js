@@ -3,6 +3,9 @@ module.exports = {
   content: ["./public/**/*.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        leagueSpartan: ["leagueSpartan", "sans-serif"],
+      },
       colors: {
         darkBlue: "#022135",
         blue: "#7BB7E0",
