@@ -102,6 +102,71 @@ function addSaveButton(codeElement) {
 
 detectCodeSnippets();
 
+// Create the modal container
+const modalContainer = document.createElement('div');
+modalContainer.id = 'snipboard-modal-container';
+document.body.appendChild(modalContainer);
+
+// Add styles for the modal
+const style = document.createElement('style');
+style.innerHTML = `
+  #snipboard-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+
+  .snipboard-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+  }
+`;
+document.head.appendChild(style);
+
+// Function to show the modal
+function showModal() {
+  modalContainer.innerHTML = `
+    <div class="snipboard-modal">
+      <h2>Add Snippet</h2>
+      <form>
+        <input type="text" placeholder="Snippet title" /><br /><br />
+        <textarea placeholder="Snippet content"></textarea><br /><br />
+        <button type="submit">Add Snippet</button>
+      </form>
+      <br />
+      <button id="close-modal">Close</button>
+    </div>
+  `;
+
+  // Add close event
+  document.getElementById('close-modal').addEventListener('click', () => {
+    modalContainer.style.display = 'none';
+  });
+
+  modalContainer.style.display = 'flex';
+}
+
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'showModal') {
+    showModal();
+    sendResponse({ status: 'modal shown' });
+  }
+});
+
+
 // Observe changes to the DOM and re-run detection if necessary
 const observer = new MutationObserver(detectCodeSnippets);
 observer.observe(document.body, { childList: true, subtree: true });
+

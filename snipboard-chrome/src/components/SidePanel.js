@@ -15,13 +15,20 @@ const SidePanel = () => {
     };
 
     return (
-        <div className="side-panel">
-            <noscript>You need to enable JavaScript to run this app.</noscript>
-            <p>Side panel</p>
-            <button onClick={handleEnlarge}>Snipboard</button>
-            {/* Add some sample talwind css code to test */}
-            <div className="bg-blue p-4">
-                <p className="text-darkRed">Sample text</p>
+        <div className="side-panel bg-darkBlue font-leagueSpartan p-4">
+            <div className="flex items-center justify-center">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Button 1
+                </button>
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4">
+                    Button 2
+                </button>
+            </div>
+            <div className="mt-4">
+                <input className="border border-gray-400 rounded py-2 px-4" type="text" placeholder="Enter your name" />
+            </div>
+            <div className="mt-4">
+                <textarea className="border border-gray-400 rounded py-2 px-4" placeholder="Enter your message"></textarea>
             </div>
         </div>
     );

@@ -27,10 +27,20 @@ module.exports = override((config) => {
     })
   );
 
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        inject: true,
+        template: path.resolve(__dirname, 'public/html/addsnip.html'),
+        filename: 'addsnip.html',
+        chunks: ['addsnip'],
+        minify: false,
+      })
+    );
+
 //   config.plugins.push(
 //     new HtmlWebpackPlugin({
 //       inject: true,
-//       template: path.resolve(__dirname, 'public/[name].html'),
+//       template: path.resolve(__dirname, 'public/html/[name].html'),
 //       filename: '[name].html',
 //       chunks: ['[name]'],
 //       minify: false,
@@ -40,6 +50,7 @@ module.exports = override((config) => {
   config.entry = {
     main: path.resolve(__dirname, 'src/popup.js'),
     sidepanel: path.resolve(__dirname, 'src/sidepanel.js'),
+    addsnip: path.resolve(__dirname, 'src/addsnip.js'),
     // [name]: path.resolve(__dirname, 'src/[name].js'),
   };
 
