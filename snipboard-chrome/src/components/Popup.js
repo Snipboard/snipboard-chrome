@@ -4,26 +4,32 @@ import '../styles/index.css';
 /* global chrome */
 
 const Popup = () => {
-  const handleAddSnip = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.scripting.executeScript(
-        {
-          target: { tabId: tabs[0].id },
-          files: ['content-script.js']
-        },
-        () => {
-          chrome.tabs.sendMessage(tabs[0].id, { action: 'showModal' });
-        }
-      );
-    });
-  };
+    const handleAddSnip = () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs[0].url.startsWith('http')) {
+            chrome.scripting.executeScript(
+                {
+                target: { tabId: tabs[0].id },
+                files: ['content_scripts/add-snip-handler.js']
+                },
+                () => {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'showModal' });
+                }
+            );
+            } else {
+            console.error('Cannot inject script into a chrome:// URL');
+            }
+        });
 
-  const handleOpenSidepanel = () => {
-    chrome.windows.getCurrent({ populate: true }, (window) => {
-      chrome.sidePanel.open({ windowId: window.id });
-    });
-    window.close();
-  };
+        chrome.storage.local.set({ isModalVisible: true });
+    };
+
+    const handleOpenSidepanel = () => {
+        chrome.windows.getCurrent({ populate: true }, (window) => {
+        chrome.sidePanel.open({ windowId: window.id });
+        });
+        window.close();
+    };
 
     const handleAccount = () => {
         console.log("Account clicked");
