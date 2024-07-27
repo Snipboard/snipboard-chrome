@@ -46,25 +46,25 @@ const Popup = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <button 
-          className="button bg-blue-500 text-white font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:border-lightBlue"
+          className="button bg-lightBlue text-darkBlue font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:bg-blue"
           onClick={handleAddSnip}
         >
           <i className="fas fa-plus mb-2 text-2xl"></i> Add Snip
         </button>
         <button 
-          className="button bg-blue-500 text-white font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:border-lightBlue"
+          className="button bg-lightBlue text-darkBlue font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:bg-blue"
           onClick={handleOpenSidepanel}
         >
           <i className="fas fa-bars mb-2 text-2xl"></i> Manage Snips
         </button>
         <button 
-          className="button bg-blue-500 text-white font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:border-lightBlue"
+          className="button bg-lightBlue text-darkBlue font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:bg-blue"
           onClick={handleAccount}
         >
           <i className="fas fa-user mb-2 text-2xl"></i> Account
         </button>
         <button 
-          className="button bg-blue-500 text-white font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:border-lightBlue"
+          className="button bg-lightBlue text-darkBlue font-bold py-4 px-4 rounded flex flex-col items-center justify-center text-base border-4 border-transparent hover:bg-blue"
           onClick={handleSettings}
         >
           <i className="fas fa-cog mb-2 text-2xl"></i> Settings

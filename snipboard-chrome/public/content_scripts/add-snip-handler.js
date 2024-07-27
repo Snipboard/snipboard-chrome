@@ -7,13 +7,14 @@ if (!window.snipboardInjected) {
   iframe.style.position = 'fixed';
   iframe.style.top = '50%';
   iframe.style.left = '50%';
-  iframe.style.width = '70%';
-  iframe.style.height = '70%';
+  iframe.style.width = '95%';
+  iframe.style.height = '80%';
   iframe.style.border = 'none';
   iframe.style.zIndex = '10001'; // Higher than the overlay
   iframe.style.transform = 'translate(-50%, -50%)';
   iframe.style.display = 'none'; // Initially hidden
-  iframe.style.backgroundColor = 'transparent'; // Transparent background
+  iframe.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Transparent background
+  iframe.style.allowTransparency = 'true';
 
   // Create the background overlay
   const overlay = document.createElement('div');
