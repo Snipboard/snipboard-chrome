@@ -8,13 +8,12 @@ if (!window.snipboardInjected) {
   iframe.style.top = '50%';
   iframe.style.left = '50%';
   iframe.style.width = '95%';
-  iframe.style.height = '80%';
+  iframe.style.height = '95%';
   iframe.style.border = 'none';
   iframe.style.zIndex = '10001'; // Higher than the overlay
   iframe.style.transform = 'translate(-50%, -50%)';
   iframe.style.display = 'none'; // Initially hidden
-  iframe.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Transparent background
-  iframe.style.allowTransparency = 'true';
+  iframe.style.backgroundColor = "transparent";
 
   // Create the background overlay
   const overlay = document.createElement('div');
@@ -40,7 +39,7 @@ if (!window.snipboardInjected) {
 
   // Listen for messages from the iframe to handle closing
   window.addEventListener('message', (event) => {
-    if (event.origin === new URL(chrome.runtime.getURL('')).origin && event.data === 'closeModal') {
+    if (event.data === 'closeModal') {
       iframe.style.display = 'none';
       overlay.style.display = 'none';
     }
