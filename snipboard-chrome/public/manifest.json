@@ -27,7 +27,7 @@
     ],
     "web_accessible_resources": [
         {
-        "resources": ["content_scripts/save-btn-handler.js", "content_scripts/add-snip-handler.js", "html/add-snip.html"],
+        "resources": ["content_scripts/save-btn-handler.js", "content_scripts/add-snip-handler.js", "addsnip.html", "addsnip.*"],
         "matches": ["<all_urls>"]
         }
     ]

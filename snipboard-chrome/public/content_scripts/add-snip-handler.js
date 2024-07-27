@@ -5,27 +5,45 @@ if (!window.snipboardInjected) {
   const iframe = document.createElement('iframe');
   iframe.id = 'snipboard-modal-iframe';
   iframe.style.position = 'fixed';
-  iframe.style.top = '0';
-  iframe.style.left = '0';
-  iframe.style.width = '100%';
-  iframe.style.height = '100%';
+  iframe.style.top = '50%';
+  iframe.style.left = '50%';
+  iframe.style.width = '70%';
+  iframe.style.height = '70%';
   iframe.style.border = 'none';
-  iframe.style.zIndex = '9999';
+  iframe.style.zIndex = '10001'; // Higher than the overlay
+  iframe.style.transform = 'translate(-50%, -50%)';
   iframe.style.display = 'none'; // Initially hidden
+  iframe.style.backgroundColor = 'transparent'; // Transparent background
+
+  // Create the background overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'snipboard-modal-overlay';
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Darken effect
+  overlay.style.zIndex = '10000'; // Just below the iframe
+  overlay.style.display = 'none'; // Initially hidden
+
   document.body.appendChild(iframe);
+  document.body.appendChild(overlay);
 
   // Function to show the modal
   function showModal() {
-    iframe.src = chrome.runtime.getURL('html/add-snip.html'); // Load your modal content
+    iframe.src = chrome.runtime.getURL('../addsnip.html'); // Adjust path if necessary
     iframe.style.display = 'block'; // Show the iframe
-
-    // Listen for messages from the iframe to handle closing
-    window.addEventListener('message', (event) => {
-      if (event.origin === new URL(chrome.runtime.getURL('')).origin && event.data === 'closeModal') {
-        iframe.style.display = 'none';
-      }
-    });
+    overlay.style.display = 'block'; // Show the overlay
   }
+
+  // Listen for messages from the iframe to handle closing
+  window.addEventListener('message', (event) => {
+    if (event.origin === new URL(chrome.runtime.getURL('')).origin && event.data === 'closeModal') {
+      iframe.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+  });
 
   // Listener for showing the modal
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
