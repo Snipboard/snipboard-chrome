@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import '../styles/index.css';
+import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/vs2015.css';
+
+// Import the languages you want to support
+import javascriptHighlight from 'highlight.js/lib/languages/javascript';
+import python from 'highlight.js/lib/languages/python';
+import csharp from 'highlight.js/lib/languages/csharp';
+import xml from 'highlight.js/lib/languages/xml'; // For HTML
+import css from 'highlight.js/lib/languages/css';
+import markdown from 'highlight.js/lib/languages/markdown';
+
+// Register the languages with highlight.js
+hljs.registerLanguage('javascript', javascriptHighlight);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('csharp', csharp);
+hljs.registerLanguage('html', xml);
+hljs.registerLanguage('css', css);
+hljs.registerLanguage('markdown', markdown);
 
 const AddSnip = () => {
   const [title, setTitle] = useState('');
@@ -20,11 +38,15 @@ const AddSnip = () => {
     window.parent.postMessage('closeModal', '*');
   };
 
-  const [value, setValue] = React.useState("console.log('hello world!');");
-  const onChange = React.useCallback((val, viewUpdate) => {
-    console.log('val:', val);
-    setValue(val);
-  }, []);
+  const detectLanguage = (code) => {
+    const { value, language } = hljs.highlightAuto(code, ['javascript', 'python', 'csharp', 'html', 'css', 'markdown']);
+    setLanguages(language);
+  };
+
+  const handleSnippetChange = (val) => {
+    setSnippet(val);
+    detectLanguage(val);
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-darkBlue rounded-xl shadow-2xl z-50">
@@ -44,21 +66,27 @@ const AddSnip = () => {
                   style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
                 />
               </div>
-              <div className="relative border-4 border-black rounded-lg h-max">
-                <CodeMirror value={value} height="200px" extensions={[javascript({ jsx: true })]} onChange={onChange} theme={vscodeDark} />;
+              <div className="relative border-4 border-black bg-codeBg rounded-lg h-max text-small">
+                <CodeMirror
+                  value={snippet}
+                  height="200px"
+                  extensions={[javascript({ jsx: true })]}
+                  onChange={(value, viewUpdate) => handleSnippetChange(value)}
+                  theme={vscodeDark}
+                />
               </div>
               <div className="flex justify-between items-center mt-2">
                 <input
                   type="text"
                   name="languages"
                   className="text-white px-4 py-2 rounded text-xs font-bold bg-transparent border-none focus:outline-none w-full"
-                  placeholder="Enter languages, separated by commas"
+                  placeholder="Detected language"
                   value={languages}
                   onChange={(e) => setLanguages(e.target.value)}
                   style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
                 />
               </div>
-              <div className="mt-2 text-white bg-zinc-800 rounded-lg">
+              <div className="mt-2 text-white bg-zinc-800 rounded-lg mb-2">
                 <h3 className="font-bold mb-2">Description</h3>
                 <textarea
                   name="description"
