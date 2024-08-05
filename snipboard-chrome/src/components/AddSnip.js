@@ -37,7 +37,10 @@ const AddSnip = () => {
   const [lastGeneratedTitle, setLastGeneratedTitle] = useState('');
 
   const debounceTimeout = useRef(null);
-  const groq = new Groq({ apiKey: "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", dangerouslyAllowBrowser: true });
+  const groq = new Groq({ 
+    apiKey: process.env.REACT_APP_GROQ_API_KEY, 
+    dangerouslyAllowBrowser: true 
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -126,19 +129,12 @@ const AddSnip = () => {
           </h2>
           <form onSubmit={handleSubmit} id="snippet-form">
             <div className="relative bg-zinc-800 border-black shadow-xl border-4 p-4 rounded-xl">
-              <div className="flex justify-between items-center mb-3 relative">
-                <button
-                  type="button"
-                  className="mr-2 bg-lightBlue hover:bg-blue text-darkBlue text-sm font-bold py-1 px-3 rounded-full"
-                  onClick={handleTitleAutofill}
-                  title="Autofill title"
-                >
-                  <MdAutoAwesome className="text-lg" />
-                </button>
+              <div className="flex items-center mb-3 relative">
+                <MdAutoAwesome className="text-lg text-white opacity-70 mr-2" />
                 <input
                   type="text"
                   name="title"
-                  className="text-white font-bold pb-2 bg-transparent text-lg border-none focus:outline-none w-full"
+                  className="text-white font-bold px-4 pb-2 bg-transparent text-lg border-none focus:outline-none w-full"
                   placeholder={suggestedTitle && !title ? "Suggested: " + suggestedTitle : "Enter title"}
                   value={title}
                   onChange={handleTitleChange}
