@@ -17,14 +17,30 @@ import csharp from 'highlight.js/lib/languages/csharp';
 import xml from 'highlight.js/lib/languages/xml'; // For HTML
 import css from 'highlight.js/lib/languages/css';
 import markdown from 'highlight.js/lib/languages/markdown';
+import typescript from 'highlight.js/lib/languages/typescript';
+import java from 'highlight.js/lib/languages/java';
+import cpp from 'highlight.js/lib/languages/cpp';
+import ruby from 'highlight.js/lib/languages/ruby';
+import php from 'highlight.js/lib/languages/php';
+import go from 'highlight.js/lib/languages/go';
+import swift from 'highlight.js/lib/languages/swift';
+import kotlin from 'highlight.js/lib/languages/kotlin';
 
 // Register the languages with highlight.js
 hljs.registerLanguage('javascript', javascriptHighlight);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('csharp', csharp);
-hljs.registerLanguage('html', xml);
+hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('markdown', markdown);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('java', java);
+hljs.registerLanguage('cpp', cpp);
+hljs.registerLanguage('ruby', ruby);
+hljs.registerLanguage('php', php);
+hljs.registerLanguage('go', go);
+hljs.registerLanguage('swift', swift);
+hljs.registerLanguage('kotlin', kotlin);
 
 const AddSnip = () => {
   const [title, setTitle] = useState('');
@@ -60,12 +76,12 @@ const AddSnip = () => {
   const handleSnippetChange = (val) => {
     setSnippet(val);
     setChangeCount(changeCount + 1);
+    detectLanguage(val);
 
     if (val === lastGeneratedSnippet) {
       setSuggestedTitle(lastGeneratedTitle);
     } else if (val.length >= 20 && changeCount >= 5) {
       generateTitleSuggestion(val);
-      handleLanguageDetectClick();
       setChangeCount(0);
     } else if (val.length >= 20) {
       if (debounceTimeout.current) {
@@ -73,14 +89,9 @@ const AddSnip = () => {
       }
       debounceTimeout.current = setTimeout(() => {
         generateTitleSuggestion(val);
-        handleLanguageDetectClick();
         setChangeCount(0);
       }, 2000); // 2 seconds debounce
     }
-  };
-
-  const handleLanguageDetectClick = () => {
-    detectLanguage(snippet);
   };
 
   const generateTitleSuggestion = async (code) => {
@@ -130,19 +141,21 @@ const AddSnip = () => {
           <form onSubmit={handleSubmit} id="snippet-form">
             <div className="relative bg-zinc-800 border-black shadow-xl border-4 p-4 rounded-xl">
               <div className="flex items-center mb-3 relative">
-                <MdAutoAwesome className="text-lg text-white opacity-70 mr-2" />
+                {suggestedTitle && !title && (
+                  <MdAutoAwesome className="text-lg text-white opacity-70 w-max h-max pb-2" />
+                )}
                 <input
                   type="text"
                   name="title"
-                  className="text-white font-bold px-4 pb-2 bg-transparent text-lg border-none focus:outline-none w-full"
-                  placeholder={suggestedTitle && !title ? "Suggested: " + suggestedTitle : "Enter title"}
+                  className="text-white font-bold px-2 pb-2 bg-transparent text-lg border-none focus:outline-none w-full"
+                  placeholder={suggestedTitle && !title ? `Suggested: ${suggestedTitle}` : "Enter title"}
                   value={title}
                   onChange={handleTitleChange}
                   onKeyDown={handleTitleKeyDown}
                   style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
                 />
               </div>
-              <div className="relative border-4 border-black bg-codeBg rounded-lg h-max text-base">
+              <div className="relative border-4 border-black bg-codeBg rounded-lg h-max text-base dark-scrollbar">
                 <CodeMirror
                   value={snippet}
                   height="200px"
@@ -152,22 +165,30 @@ const AddSnip = () => {
                 />
               </div>
               <div className="flex justify-between items-center mt-2 space-x-2">
-                <button
-                  type="button"
-                  className="bg-lightBlue hover:bg-blue text-darkBlue text-sm font-bold py-1 px-3 rounded-full"
-                  onClick={handleLanguageDetectClick}
-                >
-                  <MdAutoAwesome className="text-lg" />
-                </button>
-                <input
-                  type="text"
+                <MdAutoAwesome className="text-lg w-max h-max text-white py-2" />
+                <select
                   name="languages"
-                  className="text-white px-4 py-2 rounded text-sm font-bold bg-transparent border-none focus:outline-none w-full"
-                  placeholder={languages ? "Suggested: " + languages : "Choose a language or use auto-detect"}
+                  className="text-white px-1 py-2 rounded text-sm font-bold bg-darkSelect border-none focus:outline-none w-full"
                   value={languages}
                   onChange={(e) => setLanguages(e.target.value)}
                   style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
-                />
+                >
+                  <option value="">Choose a language or use auto-detect</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="python">Python</option>
+                  <option value="csharp">C#</option>
+                  <option value="xml">HTML</option>
+                  <option value="css">CSS</option>
+                  <option value="markdown">Markdown</option>
+                  <option value="typescript">TypeScript</option>
+                  <option value="java">Java</option>
+                  <option value="cpp">C++</option>
+                  <option value="ruby">Ruby</option>
+                  <option value="php">PHP</option>
+                  <option value="go">Go</option>
+                  <option value="swift">Swift</option>
+                  <option value="kotlin">Kotlin</option>
+                </select>
               </div>
               <div className="mt-4 text-white bg-zinc-800 rounded-lg mb-2">
                 <h2 className="font-bold mb-2 text-lg">Description</h2>

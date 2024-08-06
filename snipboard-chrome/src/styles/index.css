@@ -22,3 +22,39 @@ code {
   width: 300px;
   height: 400px;
 }
+
+.bg-darkSelect {
+  background-color: #2d2d2d; /* Dark background color */
+  color: #ffffff; /* White text color */
+}
+
+.bg-darkSelect option {
+  background-color: #2d2d2d; /* Dark background color for options */
+  color: #ffffff; /* White text color for options */
+}
+
+/* Custom scrollbar styles */
+.dark-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  background-color: #1E1E1E;
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #121212;
+  border-radius: 2px;
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #333;
+}
+
+.dark-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: #121212 #1E1E1E;
+}
+
+/* For Firefox */
+.dark-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: #121212 #1E1E1E;
+}

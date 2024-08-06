@@ -14,7 +14,8 @@ module.exports = {
         darkRed: "#560216",
         codeBg: "#1E1E1E",
         darkCodeBg: "#121212",
-        lightCodeBg: "#2E2E2E"
+        lightCodeBg: "#2E2E2E",
+        darkSelect: '#2d2d2d',
       }
     },
   },
